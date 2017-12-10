@@ -22,10 +22,6 @@ local function onEnd(c)
     end
 end
 
-local data = "HTTP/1.0 200 OK\r\nAccess-Control-Allow-Origin: *\r\n\r\nHello World!"
-sender(c, data, onEnd)
-
---[[
 local function sfile(c, fileName, isGz)
     local headers = ok
     if isGz then
@@ -38,9 +34,9 @@ local function sfile(c, fileName, isGz)
     end)
 end
 
-if (path == "/favicon.ico") then
-    sfile(c, "favicon.png", true)
-elseif (path == "/refresh.png") then
+if (path == "/conf") then
+    sfile(c, "cfg", false)
+--[[elseif (path == "/refresh.png") then
     sfile(c, "refresh.png", true)
 elseif (path == "/start_page.css") then
     sfile(c, "start_page.css", true)
@@ -53,8 +49,8 @@ elseif (method == "POST" and path == "/lights") then
 elseif (method == "GET" and path == "/settings") then
     loadScript("send_settings")(c, onEnd)
 elseif (path == "/") then
-    sfile(c, "start_page.html", true)
+    sfile(c, "start_page.html", true)]]
 else
     pcall(sender, c, "HTTP/1.0 404", onEnd)
 end
-]]
+

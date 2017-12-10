@@ -1,29 +1,42 @@
 C = {}
 C.TZ_OFFSET = 10800 -- 3 hours from UTC
+C.PWM_PIN = 1
+C.PWM_MAX_DUTY = 700
+C.PWM_FREQ = 1000
 
+-- WIFI
+cfg = {
+    ssid = "internet",
+    pwd = "654qwerty123",
+    save = true
+}
 wifi.setmode(wifi.STATION)
-
-cfg = {}
-cfg.ssid = "internet"
-cfg.pwd = "654qwerty123"
-cfg.save = true
 wifi.eventmon.register(wifi.eventmon.STA_CONNECTED, function(T)
     print("\n\tSTA - CONNECTED" .. "\n\tSSID: " .. T.SSID .. "\n\tBSSID: " ..
             T.BSSID .. "\n\tChannel: " .. T.channel)
 
     sntp.sync(nil,
-        function(sec, usec, server, info)
+        function(sec, usec, server)
             print('sync', sec, usec, server)
-            local tm = getTime()
-            print(string.format("%04d/%02d/%02d %02d:%02d:%02d", tm["year"], tm["mon"], tm["day"], tm["hour"], tm["min"], tm["sec"]))
+            printTime()
         end,
         nil,
         1)
 end)
 wifi.sta.config(cfg)
 
+--PWM
+pwm.setup(C.PWM_PIN, C.PWM_FREQ, 0)
+pwm.start(1)
+
+-- GLOBAL functions
 function getTime()
     return rtctime.epoch2cal(rtctime.get() + C.TZ_OFFSET)
+end
+
+function printTime()
+    local tm = getTime()
+    print(string.format("%04d/%02d/%02d %02d:%02d:%02d", tm["year"], tm["mon"], tm["day"], tm["hour"], tm["min"], tm["sec"]))
 end
 
 function loadScript(script)
@@ -40,3 +53,7 @@ function cPoolSize()
 end
 
 loadScript("init_server")()
+
+cron.schedule("* * * * *", function(e)
+    loadScript("update_pwm")()
+end)
