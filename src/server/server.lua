@@ -26,8 +26,11 @@ local function sfile(c, fileName, isGz)
     end)
 end
 
-if (path == "/conf") then
+print(method, path)
+if (method == "GET" and path == "/conf") then
     loadScript("send_cfg")(c, onEnd)
+elseif (method == "POST" and path == "/conf") then
+    loadScript("save_cfg")(c, data.body, onEnd)
 elseif path == "/page.js" then
     sfile(c, "page.js", false)
 elseif (path == "/" and method == "GET") then
