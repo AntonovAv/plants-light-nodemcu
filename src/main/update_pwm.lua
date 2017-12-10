@@ -1,13 +1,14 @@
 local cfg = loadScript("get_cfg")()
 
-if (#cfg["rules"] == 0) then return end
+local rules = cfg["rules"]
+if (#rules == 0) then return end
 
 local curTime = getTime()
 local cHour = curTime["hour"]
 local cMin = curTime["min"]
 
 local curRuleId = -1
-for id, rule in pairs(cfg["rules"]) do
+for id, rule in pairs(rules) do
     local h = rule["h"]
     local m = rule["m"]
     if (cHour > h or (cHour == h and cMin >= m)) then
@@ -16,10 +17,10 @@ for id, rule in pairs(cfg["rules"]) do
 end
 
 if (curRuleId == -1) then
-    curRuleId = 1
+    curRuleId = #rules
 end
 
-local br = cfg["rules"][curRuleId]["br"]
+local br = rules[curRuleId]["br"]
 local duty = 0
 if br > 0 then
     duty = (C.PWM_MAX_DUTY * br) / 100
