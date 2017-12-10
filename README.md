@@ -2,7 +2,7 @@
 NodeMCU based project for control plant LED lamp with PWM
 
 ### Features:   
-- [ ] Scheduled on\off  
+- [x] Scheduled on\off  
 - [ ] lamp current measuring   
-- [ ] up to date time from internet   
-- [ ] web interface for configuration   
+- [x] up to date time from internet   
+- [x] web interface for configuration   
