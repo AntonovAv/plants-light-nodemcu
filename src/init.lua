@@ -11,17 +11,10 @@ cfg = {
     save = true
 }
 wifi.setmode(wifi.STATION)
-wifi.eventmon.register(wifi.eventmon.STA_CONNECTED, function(T)
-    print("\n\tSTA - CONNECTED" .. "\n\tSSID: " .. T.SSID .. "\n\tBSSID: " ..
-            T.BSSID .. "\n\tChannel: " .. T.channel)
-
-    sntp.sync(nil,
-        function(sec, usec, server)
-            print('sync', sec, usec, server)
-            printTime()
-        end,
-        nil,
-        1)
+wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T)
+    print("\n\tSTA - GOT IP" .. "\n\tStation IP: " .. T.IP .. "\n\tSubnet mask: " ..
+            T.netmask .. "\n\tGateway IP: " .. T.gateway)
+    syncTime()
 end)
 wifi.sta.config(cfg)
 
@@ -34,6 +27,15 @@ function getTime()
     return rtctime.epoch2cal(rtctime.get() + C.TZ_OFFSET)
 end
 
+function syncTime()
+    sntp.sync(nil,
+        function(sec, usec, server)
+            print('sync', sec, usec, server)
+            printTime()
+        end,
+        nil,
+        1)
+end
 
 function printTime()
     local tm = getTime()
@@ -57,4 +59,8 @@ loadScript("init_server")()
 
 cron.schedule("* * * * *", function(e)
     loadScript("update_pwm")()
+end)
+
+cron.schedule("*/10 * * * *", function(e)
+    syncTime()
 end)

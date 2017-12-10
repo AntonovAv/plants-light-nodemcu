@@ -1,5 +1,5 @@
 (function () {
-    const confUrl = "http://192.168.0.8/conf"
+    const confUrl = "/conf"
     $('body').append('<div>Current settings</div>')
     $.ajax(confUrl).then((data) => {
         console.log(data)
