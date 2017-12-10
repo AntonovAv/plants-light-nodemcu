@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="luaproject" default="all">
+
+    <property name="base" value="${basedir}"/>
+    <property name="build" value="${base}\build"/>
+    <property name="src" value="${base}\src"/>
+
+    <target name="clear">
+        <delete includeemptydirs="true" failonerror="0">
+            <fileset dir="${build}" includes="**\*"/>
+        </delete>
+    </target>
+
+    <target name="build" depends="clear">
+        <copy todir="${build}" flatten="true" includeemptydirs="false">
+            <fileset dir="${src}\">
+                <filename name="**\*.lua"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="minifyLuaNew">
+        <delete dir="${build}\temp"/>
+        <copy todir="${build}\temp" flatten="true" includeEmptyDirs="false">
+            <fileset dir="${src}\">
+                <filename name="**\*.lua"/>
+            </fileset>
+        </copy>
+
+        <apply executable="${base}\tools\Lua\lua\bin\lua.exe" parallel="false">
+            <arg value="${base}\tools\luaDietNew\bin\LuaSrcDiet.lua"/>
+            <srcfile/>
+            <fileset dir="${build}\temp\">
+                <filename name="**\*.lua"/>
+            </fileset>
+            <arg value="--maximum"/>
+            <arg value="--noopt-numbers"/>
+        </apply>
+
+        <move todir="${build}" includeEmptyDirs="false">
+            <fileset dir="${build}\temp">
+                <include name="**\*_.lua"/>
+            </fileset>
+            <globmapper from="*_.lua" to="*.lua"/>
+        </move>
+
+        <delete dir="${build}\temp"/>
+    </target>
+
+</project>
