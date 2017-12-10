@@ -34,6 +34,7 @@ function getTime()
     return rtctime.epoch2cal(rtctime.get() + C.TZ_OFFSET)
 end
 
+
 function printTime()
     local tm = getTime()
     print(string.format("%04d/%02d/%02d %02d:%02d:%02d", tm["year"], tm["mon"], tm["day"], tm["hour"], tm["min"], tm["sec"]))

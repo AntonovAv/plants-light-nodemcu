@@ -16,6 +16,10 @@
             <fileset dir="${src}\">
                 <filename name="**\*.lua"/>
             </fileset>
+
+            <fileset dir="${src}\client">
+                <filename name="*"/>
+            </fileset>
         </copy>
 
         <copy file="${src}/cfg" todir="${build}"/>

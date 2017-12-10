@@ -27,21 +27,11 @@ local function sfile(c, fileName, isGz)
 end
 
 if (path == "/conf") then
-    sfile(c, "cfg", false)
---[[elseif (path == "/refresh.png") then
-    sfile(c, "refresh.png", true)
-elseif (path == "/start_page.css") then
-    sfile(c, "start_page.css", true)
-elseif (path == "/start_page.js") then
-    sfile(c, "start_page.js", true)
-elseif (method == "POST" and path == "/settings") then
-    loadScript("settings_handler")(c, data.body, onEnd)
-elseif (method == "POST" and path == "/lights") then
-    loadScript("custom_lights")(c, data.body, onEnd)
-elseif (method == "GET" and path == "/settings") then
-    loadScript("send_settings")(c, onEnd)
-elseif (path == "/") then
-    sfile(c, "start_page.html", true)]]
+    loadScript("send_cfg")(c, onEnd)
+elseif path == "/page.js" then
+    sfile(c, "page.js", false)
+elseif (path == "/" and method == "GET") then
+    sfile(c, "index.html", false)
 else
     pcall(sender, c, "HTTP/1.0 404", onEnd)
 end
