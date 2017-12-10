@@ -1,4 +1,4 @@
-local c, data = ...
+local c, data, onEnd = ...
 
 print("handle", data.path, data.method, data.body, c)
 
@@ -13,14 +13,6 @@ local gZip = "Content-Encoding: gzip\r\n"
 local mt = { css = "text/css", html = "text/html", js = "application/javascript", png = "image/png" }
 
 local sender = loadScript("sender")
---local sfile = loadScript("send_file")
-local function onEnd(c)
-    if _CP[c] then
-        _CP[c] = nil
-        c:close()
-        coroutine.resume(_SERVER_CO)
-    end
-end
 
 local function sfile(c, fileName, isGz)
     local headers = ok
