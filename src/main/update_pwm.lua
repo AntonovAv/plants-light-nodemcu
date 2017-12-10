@@ -8,7 +8,14 @@ local cHour = curTime["hour"]
 local cMin = curTime["min"]
 
 local curRuleId = -1
-for id, rule in pairs(rules) do
+table.sort(rules, function(a, b)
+    local aH = a["h"]
+    local bH = b["h"]
+    if (aH == bH) then return a["m"] < b["m"] end
+    return aH < bH
+end)
+
+for id, rule in ipairs(rules) do
     local h = rule["h"]
     local m = rule["m"]
     if (cHour > h or (cHour == h and cMin >= m)) then

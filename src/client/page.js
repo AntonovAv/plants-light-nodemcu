@@ -1,5 +1,5 @@
 (function () {
-    const confUrl = "/conf"
+    const confUrl = "http://192.168.0.8/conf"
     $('body').append('<div>Current settings</div>')
     $.ajax(confUrl).then((data) => {
         console.log(data)
@@ -29,7 +29,7 @@
 
     const lz = (val) => {
         if (val < 10) {
-            return `${val}0`
+            return `0${val}`
         }
         return `${val}`
     }
