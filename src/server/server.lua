@@ -33,6 +33,8 @@ elseif (method == "POST" and path == "/conf") then
     loadScript("save_cfg")(c, data.body, onEnd)
 elseif path == "/page.js" then
     sfile(c, "page.js", false)
+elseif path == "/styles.css" then
+    sfile(c, "styles.css", false)
 elseif (path == "/" and method == "GET") then
     sfile(c, "index.html", false)
 else

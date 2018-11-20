@@ -1,0 +1,108 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.rules {
+    display: flex;
+    flex-direction: column;
+}
+
+.rule {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+}
+
+.rule input {
+    font-size: 15px;
+    height: 25px;
+}
+
+.rule input:first-child {
+    margin-right: 10px;
+}
+
+.rule span {
+    opacity: 0.3;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.rule span:hover {
+    opacity: 1;
+}
+
+.rule span:before, .rule span:after {
+    position: absolute;
+    left: 50%;
+    content: ' ';
+    height: 20px;
+    width: 2px;
+    background-color: #333;
+}
+
+.rule span:before {
+    transform: rotate(45deg);
+}
+
+.rule span:after {
+    transform: rotate(-45deg);
+}
+
+.add {
+    cursor: pointer;
+    height: 22px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid darkgrey;
+    border-radius: 6px;
+    width: 200px;
+    margin-top: 20px;
+}
+.add:hover {
+    background-color: thistle;
+}
+
+.saving {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.saving .save {
+    border: 1px solid darkgray;
+    border-radius: 6px;
+    height: 22px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+}
+
+.saving .save:hover {
+    cursor: pointer;
+    background-color: thistle;
+}
+
+.saving .note {
+    margin-left: 30px;
+    color: green;
+    font-size: 15px;
+    visibility: hidden;
+}
+
+.saving .note.show {
+    visibility: visible;
+}
