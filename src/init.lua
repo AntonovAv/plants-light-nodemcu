@@ -28,7 +28,7 @@ function getTime()
 end
 
 function syncTime()
-    sntp.sync(nil,
+    sntp.sync({ "0.ru.pool.ntp.org", "1.ru.pool.ntp.org", "2.ru.pool.ntp.org" },
         function(sec, usec, server)
             print('sync', sec, usec, server)
             printTime()
