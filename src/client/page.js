@@ -16,15 +16,24 @@
             initRule(container, rule)
         })
 
-        $("<div>Add more</div>")
+        $("<div>+ Add more</div>")
             .click(() => {
                 initRule(container, {h: 0, m: 0, br: 50})
             })
+            .addClass('add')
+            .appendTo('body')
+
+        this.$saving = $("<div/>")
+            .addClass('saving')
             .appendTo('body')
 
         $("<div>Save</div>")
             .click(save)
-            .appendTo('body')
+            .addClass('save')
+            .appendTo(this.$saving)
+        this.$savingNote = $('<div>Saved</div>')
+            .addClass('note')
+            .appendTo(this.$saving)
     }
 
     const lz = (val) => {
@@ -61,7 +70,7 @@
                 }
                 e.target.value = val
             })
-        $("<span>").text('x').click(() => {
+        $("<span>").click(() => {
             $rule.remove()
         }).appendTo($rule)
     }
@@ -84,9 +93,9 @@
             method: 'POST'
         })
             .then((res) => {
-                const inf = $('<div>Saved</div>').addClass('note').appendTo('body')
+                $savingNote.toggleClass('show', true)
                 setTimeout(() => {
-                    inf.remove()
+                    $savingNote.toggleClass('show', false)
                 }, 2000)
             })
     }
